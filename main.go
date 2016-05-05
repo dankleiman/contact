@@ -8,11 +8,15 @@ import(
   "gopkg.in/gomail.v2"
 )
 func main() {
+  http.HandleFunc("/", hello)
   http.HandleFunc("/contact", contact)
   // do we serve off an enviroment variable here?
   http.ListenAndServe(":8080", nil)
 }
 
+func hello(w http.ResponseWriter, r *http.Request){
+  w.Write([]byte("hello!"))
+}
 func contact(w http.ResponseWriter, r *http.Request){
     // f, err := os.OpenFile("log.txt", os.O_CREATE | os.O_WRONLY | os.O_APPEND, 0666)
     // if err != nil {
