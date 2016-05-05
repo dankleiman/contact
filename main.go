@@ -5,15 +5,11 @@ import(
   "os"
   "fmt"
   "gopkg.in/gomail.v2"
-  "github.com/joho/godotenv"
 )
 
-func main() {
-  err := godotenv.Load()
-  if err != nil {
-    panic("Error loading .env file")
-  }
+import _ "github.com/joho/godotenv/autoload"
 
+func main() {
   http.HandleFunc("/", hello)
   http.HandleFunc("/contact", contact)
 
