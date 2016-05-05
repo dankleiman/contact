@@ -1,1 +1,1 @@
-web: ./contact
+web: contact
