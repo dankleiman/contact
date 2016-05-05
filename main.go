@@ -28,7 +28,7 @@ func hello(w http.ResponseWriter, r *http.Request){
 
 func contact(w http.ResponseWriter, r *http.Request){
     r.ParseForm()
-    email := os.Getenv("EMAIL")
+    toEmail := os.Getenv("EMAIL")
 
     // c := fmt.Sprintf("Hi %s\n We've recieved a message from %s:\n %s \nThanks!", r.FormValue("name"), r.FormValue("email"), r.FormValue("message"))
 
@@ -42,13 +42,16 @@ func contact(w http.ResponseWriter, r *http.Request){
     // confirmation.sendMail()
 
     // send me the submission
-    s := fmt.Sprintf("You've recieved a message from %s(%s):\n %s", r.FormValue("name"), r.FormValue("email"), r.FormValue("message"))
+    fromEmail := r.FormValue("email")
+    name := r.FormValue("name")
+    subject := fmt.Sprintf("New contact form submission from %s (%s)", name, fromEmail)
+    body := fmt.Sprintf("You've recieved a message from %s(%s):\n %s", name, fromEmail, r.FormValue("message"))
 
     submission := new(mailDetails)
-    submission.To = email
-    submission.From = r.FormValue("email")
-    submission.Subject = "New contact form submission"
-    submission.Body = s
+    submission.To = toEmail
+    submission.From = fromEmail
+    submission.Subject = subject
+    submission.Body = body
 
     submission.sendMail()
 }
